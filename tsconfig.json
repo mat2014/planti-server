@@ -3,23 +3,35 @@
     "target": "ES2020",
     "module": "CommonJS",
     "moduleResolution": "node",
+    
+    // --- Configurações Cruciais para Servidor ---
+    "outDir": "./dist", // Pasta de saída onde o JavaScript compilado será colocado
+    "rootDir": "./src", // Pasta raiz que contém seus arquivos TypeScript
+    "types": ["node", "express"], // Inclui os tipos de ambiente para Node e Express
+    
+    // --- Configurações de Qualidade/Interop ---
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "types": [],
+    
+    // --- Configurações de Desenvolvimento ---
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": false,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force"
+    
+    // --- Opções Desnecessárias/Conflitantes Removidas ou Ajustadas para Node ---
+    "jsx": "preserve", // Mantido, mas não afeta se não houver JSX
+    "isolatedModules": false, // Geralmente desativado em projetos de servidor
+    "noUncheckedIndexedAccess": false, // Desativado para maior compatibilidade com bibliotecas
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedSideEffectImports": false,
+    "moduleDetection": "auto"
   },
-  "include": ["src", "src/**/*", "**/*.ts", "**/*.tsx", "**/*.js"],
+  
+  // --- Otimização do Include ---
+  // Apenas busca por arquivos dentro da pasta 'src'
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
