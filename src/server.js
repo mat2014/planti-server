@@ -1,5 +1,5 @@
 // =====================================================================
-// 🌿 SERVIDOR EXPRESS + MQTT + SOCKET.IO + CRUD COMPLETO
+// 🌿 SERVIDOR EXPRESS + MQTT + SOCKET.IO + CRUD COMPLETO + LOGIN
 // =====================================================================
 const express = require('express');
 const fs = require('fs');
@@ -203,6 +203,30 @@ app.post('/register', (req, res) => {
     res.status(201).json({ message: 'Usuário cadastrado com sucesso!' });
   } catch {
     res.status(500).json({ message: 'Erro ao salvar usuário.' });
+  }
+});
+
+// =====================================================================
+// 🔑 LOGIN DE USUÁRIO (para o App)
+// =====================================================================
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password)
+    return res.status(400).json({ message: 'E-mail e senha são obrigatórios.' });
+
+  try {
+    const users = readDB(USERS_DB_PATH);
+    const user = users.find((u) => u.email === email && u.password === password);
+    if (!user)
+      return res.status(401).json({ message: 'E-mail ou senha incorretos.' });
+
+    console.log(`🔐 Login bem-sucedido: ${email}`);
+    res.json({
+      message: 'Login realizado com sucesso!',
+      user: { name: user.name, email: user.email },
+    });
+  } catch {
+    res.status(500).json({ message: 'Erro ao processar login.' });
   }
 });
 
