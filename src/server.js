@@ -238,6 +238,15 @@ app.get('/mqtt-data', (req, res) => {
     return res.status(404).json({ message: 'Sem dados MQTT ainda.' });
   res.json(lastSensorData);
 });
+// =====================================================================
+// 💧 ROTA: Acionar irrigação via MQTT
+// =====================================================================
+app.post('/water-plant', (req, res) => {
+  const topic = `horta/${MQTT_PLANT_ID}/regar`;
+  mqttClient.publish(topic, '1'); // envia comando para ESP32
+  console.log(`🚿 Comando de irrigação enviado para ${topic}`);
+  res.json({ message: 'Irrigação acionada com sucesso!' });
+});
 
 // =====================================================================
 // 🚀 ROTA DE STATUS
