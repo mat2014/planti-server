@@ -105,26 +105,22 @@ router.delete('/:id', (req, res) => {
 // =====================================================================
 
 // Rota POST /login - Simula a autenticação
-app.post('/login', (req, res) => {
-    const { email, password } = req.body;
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
 
-    // --- SIMULAÇÃO DE CREDENCIAIS VÁLIDAS ---
-    const VALID_EMAIL = 'user@horta.com';
-    const VALID_PASSWORD = '123';
+  const VALID_EMAIL = 'user@horta.com';
+  const VALID_PASSWORD = '123';
 
-    if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-        // Autenticação bem-sucedida
-        console.log(`Login bem-sucedido para: ${email}`);
-        return res.status(200).json({
-            message: 'Login realizado com sucesso!',
-            // Em um sistema real, aqui seria retornado um JWT (token de acesso)
-            token: 'fake-jwt-token-12345',
-            user: { email: email, name: 'Usuário Horta' }
-        });
-    } else {
-        // Falha na autenticação
-        console.log(`Tentativa de login falhou para: ${email}`);
-        return res.status(401).json({ message: 'E-mail ou senha inválidos.' });
-    }
+  if (email === VALID_EMAIL && password === VALID_PASSWORD) {
+    console.log(`Login bem-sucedido para: ${email}`);
+    return res.status(200).json({
+      message: 'Login realizado com sucesso!',
+      token: 'fake-jwt-token-12345',
+      user: { email, name: 'Usuário Horta' },
+    });
+  } else {
+    console.log(`Tentativa de login falhou para: ${email}`);
+    return res.status(401).json({ message: 'E-mail ou senha inválidos.' });
+  }
 });
 module.exports = router;
